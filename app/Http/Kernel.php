@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+
+        // 让中间件在应用的每个 HTTP 请求期间运行
+//        \App\Http\Middleware\TestTerminateMiddleware::class,
     ];
 
     /**
@@ -41,6 +44,8 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        // 用单一的 键 为几个中间件分组，使其更容易分配到路由
     ];
 
     /**
@@ -57,5 +62,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        // 为路由分配中间件
+        'test' => \App\Http\Middleware\TestMiddleware::class,
     ];
 }

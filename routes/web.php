@@ -126,6 +126,7 @@ Route::get('hello', 'HelloController@index');
  *
  * 中间件
  *      在 group 之前调用 middleware 方法.中间件会依照它们在数组中列出的顺序来运行
+ *      通过一个 : 来隔开中间件名称和参数来指定中间件参数。多个参数就使用逗号分隔
  *
  * 命名空间
  *      请记住，默认情况下，RouteServiceProvider 会在命名空间组中引入你的路由文件，让你不用指定完整的 App\Http\Controllers 命名空间前缀就能注册控制器路由
@@ -139,7 +140,21 @@ Route::get('hello', 'HelloController@index');
  *      可以用 prefix 方法为路由组中给定的 URL 增加前缀
  */
 // 中间件
-//Route::middleware(['first', 'second'])->group(function() {});
+//Route::middleware(['test']) // 多个
+////Route::middleware('test') // 一个
+//    ->group(function() {
+//    Route::get('user/age/{age}', function($age) {
+//        return $age + 10;
+//    });
+//});
+
+////use App\Http\Middleware\TestMiddleware;
+//Route::get('user/age/{age}', function($age) {
+//    return $age + 10;
+//})
+//    ->middleware('test');
+////  ->middleware('first', 'second'); // 多个中间件
+////  ->middleware(TestMiddleware::class); // 可以传递完整的类名，需要 use App\Http\Middleware\TestMiddleware;
 
 // 命名空间
 //Route::namespace('Admin')->group(function() {
@@ -157,6 +172,13 @@ Route::get('hello', 'HelloController@index');
 //        // 匹配包含 "/admin/users" 的 URL
 //    });
 //});
+
+// group
+Route::group(['middleware' => ['test:30,40'], 'prefix' => 'age'], function() {
+    Route::get('{age}', function($age) {
+        return $age + 10;
+    });
+});
 
 /**
  * 路由模型绑定
