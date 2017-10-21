@@ -40,8 +40,34 @@ Route::get('/', function () {
  *
  * 快速创建控制器
  *      php artisan make:controller HelloController
+ *          --resource      资源控制器
+ * 资源路由器
+ *      命名资源路由 todo
+ *      命名资源路由参数 todo
+ *      补充资源控制器
+ *          在默认的资源路由中增加额外的路由，应该在 Route::resource 之前定义这些路由
+ *
+ * 路由缓存
+ *      基于闭包的路由不能被缓存。如果要使用路由缓存，必须将所有的闭包路由转换成控制器类路由
+ *      如果你的应用只使用了基于控制器的路由，那么你应该充分利用 Laravel 的路由缓存
+ *          生成路由缓存
+ *              php artisan route:cache
+ *              运行这个命令之后，每一次请求的时候都将会加载缓存的路由文件
+ *              添加了新的路由，你需要生成 一个新的路由缓存。因此，你应该只在生产环境运行 route:cache 命令
+ *
+ *          清除路由缓存
+ *              php artisan route:clear
  */
 Route::get('hello', 'HelloController@index');
+// 当一个请求与此指定路由的 URI 匹配时， TestController 类的 show 方法就会被执行。当然，路由参数也会被传递至该方法
+Route::get('test/{id}', 'TestController@show');
+// 子目录，自动根据命名空间加载 App\Http\Controllers\Photos\AdminController
+//Route::get('foo', 'Photos\AdminController@method');
+// 单个行为控制器，不需要指定方法
+//Route::get('user/{id}', 'ShowProfile');
+// 补充资源控制器、资源控制器
+//Route::get('source/popular', 'SourceController@method');
+//Route::resource('source', 'SourceController');
 
 /**
  * 返回视图
