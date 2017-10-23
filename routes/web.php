@@ -76,6 +76,10 @@ Route::get('request/{id}', 'RequestController@show');
  *      视图文件存放于 resources/views 目录下，「点」符号可以用来引用嵌套视图
  */
 //Route::view('/hello', 'hello.hello', ['name' => 'dymyw']);
+//Route::view('/blade', 'blade', ['name' => 'dymyw']);
+Route::get('blade', function() {
+    return view('blade')->with('name', 'dymyw');
+});
 
 // 重定向
 //Route::redirect('hello', '/');
