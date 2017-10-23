@@ -16,8 +16,11 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+
+        // 输入预处理 & 规范化
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+
         \App\Http\Middleware\TrustProxies::class,
 
         // 让中间件在应用的每个 HTTP 请求期间运行

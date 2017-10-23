@@ -61,6 +61,7 @@ Route::get('/', function () {
 Route::get('hello', 'HelloController@index');
 // 当一个请求与此指定路由的 URI 匹配时， TestController 类的 show 方法就会被执行。当然，路由参数也会被传递至该方法
 Route::get('test/{id}', 'TestController@show');
+Route::get('request/{id}', 'RequestController@show');
 // 子目录，自动根据命名空间加载 App\Http\Controllers\Photos\AdminController
 //Route::get('foo', 'Photos\AdminController@method');
 // 单个行为控制器，不需要指定方法
@@ -220,3 +221,9 @@ Route::group(['middleware' => ['test:30,40'], 'prefix' => 'age'], function() {
 //$route = Route::current();
 //$name = Route::currentRouteName();
 //$action = Route::currentRouteAction();
+
+/**
+ * 通过路由闭包获取请求
+ */
+//use Illuminate\Http\Request;
+//Route::get('/', function(Request $request) {});
