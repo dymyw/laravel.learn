@@ -227,3 +227,120 @@ Route::group(['middleware' => ['test:30,40'], 'prefix' => 'age'], function() {
  */
 //use Illuminate\Http\Request;
 //Route::get('/', function(Request $request) {});
+
+/**
+ * ------------------------------------------------------------------------
+ * Laravel 的请求响应
+ * ------------------------------------------------------------------------
+ *
+ * 所有路由和控制器都会返回一个响应并发送给用户的浏览器
+ *      Laravel 提供了几种不同的方式来返回响应
+ *          字符串
+ *              自动转为一个完整的 HTTP 响应
+ *          数组
+ *              自动转为 JSON 响应
+ *          Eloquent 集合
+ *              自动转为 JSON 响应
+ *              todo
+ *          Illuminate\Http\Response 实例
+ *              允许自定义响应的 HTTP 状态码和响应头信息
+ *              Response 实例继承自 Symfony\Component\HttpFoundation\Response 类，该类提供了各种构建 HTTP 响应的方法
+ *
+ * 重定向
+ *      重定向响应是 Illuminate\Http\RedirectResponse 类的实例，并且包含用户需要重定向至另一个 URL 所需的头信息
+ *      Laravel 提供了几种方法用于生成 RedirectResponse 实例
+ *          全局辅助函数 redirect
+ *              return redirect('/');
+ *          全局辅助函数 back 重定向到之前的位置
+ *              这个功能利用了 Session，请确保调用 back 函数的路由使用 web 中间件组或所有 Session 中间件
+ *              return back()->withInput();
+ *
+ *      重定向至命名路由
+ *          不带参数调用辅助函数 redirect 时，会返回 Illuminate\Routing\Redirector 实例
+ *              return redirect()->route('login');
+ *          路由有参数，作为 route 方法的第二个参数来传递
+ *              return redirect()->route('profile', ['id' => 1]);
+ *
+ *      通过 Eloquent 模型填充参数
+ *          todo
+ *
+ *      重定向至控制器行为
+ *          将控制器和行为名称传递给 action 方法来实现
+ *              return redirect()->action('HomeController@index');
+ *          控制器路由需要参数，将它们作为第二个参数传递给 action 方法
+ *              return redirect()->action('UserController@profile', ['id' => 1]);
+ *
+ *      重定向并使用闪存的 Session 数据
+ *          链式调用 with 方法将数据闪存在 Session 中
+ *              return redirect('/')->with('status', 'Profile updated!');
+ *              用户重定向后，你可以从 session 中读取闪存的信息。例如，使用 Blade 语法
+ *                  {{ session('status') }}
+ *
+ * 其他响应类型
+ *      使用辅助函数 response 可以用来生成其他类型的响应实例
+ *      当不带参数调用辅助函数 response 时，会返回 Illuminate\Contracts\Routing\ResponseFactory 契约 的实例
+ *      契约提供了几种辅助生成响应的方法
+ *          视图响应
+ *              return response()->view(viewName, data, code)->header(key, value);
+ *              如果不需要传递自定义 HTTP 状态码或者自定义头信息，则应该使用全局辅助函数 view
+ *                  return view(viewName);
+ *          JSON 响应
+ *              json 方法会自动把 Content-Type 响应头信息设置为 application/json，并使用 PHP 函数 json_encode 将给定的数组转换为 JSON
+ *              JSONP 响应，使用 json 方法并与 withCallback 方法配合使用
+ *          文件下载
+ *              download 方法可以用来生成强制用户浏览器下载指定路径文件的响应
+ *                  路径，显示的文件名，HTTP 响应头数组
+ *                  return response()->download($pathToFile, $name, $headers);
+ *              管理文件下载的扩展包 Symfony HttpFoundation，要求下载文件名必须是 ASCII 编码的
+ *          文件响应
+ *              file 方法可以直接在用户浏览器中显示文件（不是发起下载），例如图像或者 PDF
+ *                  return response()->file($pathToFile, $headers);
+ *          响应宏
+ *              todo
+ */
+use Illuminate\Http\Request;
+Route::get('response', function(Request $request) {
+    // 字符串
+//    return 'Response';
+
+    // 数组
+//    return [1, 3, 5];
+
+    // Response 实例
+//    return response('Response Object', '200')
+//                // header 方法为其添加一系列的头信息
+////                ->header('X-Header-One', 'Header Value1')
+////                ->header('X-Header-Two', 'Header Value2');
+//                // 使用 withHeaders 方法来指定要添加到响应的头信息数组
+//                ->withHeaders([
+//                    'X-Header-One' => 'Header Value1',
+//                    'X-Header-Two' => 'Header Value2',
+//                ]);
+//                /**
+//                 * Cookies
+//                 *      Laravel 框架创建的每个 cookie 都会被加密并使用验证码进行签名，这意味着如果客户端更改了它们，便视为无效
+//                 *      想要应用程序生成的部分 Cookie 不被加密
+//                 *          用 app/Http/Middleware 目录中 App\Http\Middleware\EncryptCookies 中间件的 $except 属性来实现
+//                 *
+//                 * 将 Cookies 附加到响应 response
+//                 *      return response('Hello World')->cookie(
+//                            'name', 'value', $minutes[, $path, $domain, $secure, $httpOnly]
+//                        );
+//                 *
+//                 * 生成 Cookie 实例
+//                 *      $cookie = cookie('name', 'value', $minutes);
+//                 *      return response('Hello World')->cookie($cookie);
+//                 */
+
+    // 重定向
+//    return redirect('/');
+
+    return response()
+                // 视图响应
+//                ->view('response', ['name' => 'dymyw'], 210);
+                // JSON 响应
+                ->json(['name' => 'dymyw', 'lang' => 'php']);
+                // JSONP 响应
+//                ->json(['name' => 'dymyw', 'lang' => 'php'])
+//                ->withCallback($request->input('callback'));
+});
