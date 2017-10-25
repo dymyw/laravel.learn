@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 /**
  * 控制器并不是一定要继承基础类
@@ -47,5 +48,49 @@ class TestController extends Controller
     public function show($id)
     {
         return "Show: {$id}";
+    }
+
+    /**
+     * Laravel 的 URL 生成
+     *      Laravel 提供了几个辅助函数来为应用程序生成 URL
+     *      主要用于在模板和 API 响应中构建 URL 或者在应用程序的其他部分生成重定向响应
+     *
+     * 生成基础 URL
+     *      辅助函数 url 可以用于应用的任何一个 URL
+     *      todo
+     *
+     * 访问当前 URL
+     *      如果没有给辅助函数 url 提供路径，则会返回一个 Illuminate\Routing\UrlGenerator 实例，来允许你访问有关当前 URL 的信息
+     *          url()->current(); // $request->url();
+     *          url()->full(); // $request->fullUrl();
+     *          url()->previous();
+     *      也都可以通过 URL facade 访问
+     *          use Illuminate\Support\Facades\URL;
+     *          URL::current();
+     *          URL::full();
+     *          URL::previous();
+     *
+     * 命名路由的 URL
+     *      辅助函数 route 可以用于为指定路由生成 URL
+     *          route('say', ['name' => 'dymyw']);
+     *      将 Eloquent 模型 作为参数值传给 route 方法，它会自动提取模型的主键来生成 URL
+     *          todo
+     *
+     * 控制器行为的 URL
+     *      action 功能可以为给定的控制器行为生成 URL
+     *      这个功能不需要你传递控制器的完整命名空间，但你需要传递相对于命名空间 App\Http\Controllers 的控制器类名
+     *          $url = action('HelloController@say');
+     *      如果控制器方法需要路由参数，那就将它们作为第二个参数传递给 action 函数
+     *          $url = action('HelloController@say', ['name' => 'dymyw']);
+     *
+     * 默认值
+     *      使用 URL::defaults 方法定义这个参数的默认值
+     *      从 路由中间件 调用此方法来访问当前请求
+     *          URL::defaults(['name' => 'dymyw']);
+     *          todo
+     */
+    public function url()
+    {
+        echo $url = action('HelloController@say', ['name' => 'dymyw']);
     }
 }

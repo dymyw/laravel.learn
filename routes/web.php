@@ -59,6 +59,7 @@ Route::get('/', function () {
  *              php artisan route:clear
  */
 Route::get('hello', 'HelloController@index');
+Route::get('url', 'TestController@url');
 // 当一个请求与此指定路由的 URI 匹配时， TestController 类的 show 方法就会被执行。当然，路由参数也会被传递至该方法
 Route::get('test/{id}', 'TestController@show');
 Route::get('request/{id}', 'RequestController@show');
@@ -149,7 +150,7 @@ Route::get('blade', function() {
  *      判断当前请求是否指向了某个路由，你可以调用路由实例上的 named 方法
  *      todo
  */
-//Route::get('hello/say/{name?}', 'HelloController@say')->name('say');
+Route::get('hello/say/{name?}', 'HelloController@say')->name('say');
 
 /**
  * 路由组
