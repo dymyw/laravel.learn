@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 控制器并不是一定要继承基础类
@@ -169,5 +170,76 @@ class TestController extends Controller
     public function session(Request $request)
     {
         return $request->session()->all();
+    }
+
+    /**
+     * Laravel 的错误和日志记录
+     *      Laravel 默认自带错误和异常处理机制
+     *          应用程序触发的所有异常都被 App\Exceptions\Handler 类记录下来，然后渲染给用户
+     *      Laravel 使用 Monolog 库为各种强大的日志处理程序提供支持
+     *          Laravel 配置了多种日志处理程序，方便你在单个日志文件、多个日志文件或将错误信息写入系统日志之间进行选择
+     *
+     * 配置
+     *      错误的详细信息
+     *          config/app.php 配置文件的 debug 选项决定了是否向用户显示错误信息
+     *          默认情况下，此选项设置为获取存储在 .env 文件中的 APP_DEBUG 环境变量的值
+     *              APP_ENV=local           APP_DEBUG=true
+     *              APP_ENV=production      APP_DEBUG=false
+     *              'env' => env('APP_ENV', 'production'),
+     *              'debug' => env('APP_DEBUG', false),
+     *
+     *      日志存储
+     *          Laravel 支持 single 、daily 、 syslog 和 errorlog 四种日志写入模式
+     *          修改 config/app.php 配置文件中的 log 选项来配置 Laravel 使用的存储机制
+     *              'log' => 'daily',
+     *
+     *      最大日志文件数
+     *          使用 daily 日志模式时，Laravel 默认只保留五天份的日志文件
+     *              'log_max_files' => 30,
+     *
+     *      日志严重程度级别
+     *          使用 Monolog 时，日志消息可能具有不同程度的严重级别。默认情况下，Laravel 将存储所有级别的日志
+     *          通过将 log_level 选项添加到 app.php 配置文件中来配置应当记录的严重程度最低的日志级别
+     *          默认的 log_level 被设置为 error
+     *              'log_level' => env('APP_LOG_LEVEL', 'error'),
+     *          Monolog 识别以下严重程度的级别，从低到高为: debug、info、notice、warning、error、critical、alert、emergency
+     *
+     * 自定义 Monolog 配置
+     *      todo
+     * 自定义渠道名称
+     *      todo
+     *
+     * 异常处理
+     *      todo
+     *
+     * HTTP 异常
+     *      辅助函数 abort 会创建一个由异常处理程序渲染的异常。此外，还可以提供响应文本
+     *          abort(403, 'Unauthorized action.');
+     *
+     *      自定义 HTTP 错误页面
+     *          自定义 404 HTTP 状态代码的错误页面，就创建一个 resources/views/errors/404.blade.php
+     *          由 abort 函数引发的 HttpException 实例将作为 $exception 变量传递给视图
+     *              <h2>{{ $exception->getMessage() }}</h2>
+     *
+     * 日志
+     *      Laravel 在强大的 Monolog 库上提供了一个简单的抽象层。默认情况下，Laravel 的日志文件的存储目录被配置为 storage/logs
+     *      可以使用 Log facade 将信息写入日志，默认文件名为 laravel.log
+     *      日志记录器提供 RFC 5424 中定义的八种日志级别：emergency、alert、critical、error、warning、notice、info 和 debug
+     *          // [2017-10-25 09:18:21] local.INFO: Showing user profile for user: dymyw
+     *          Log::info('Showing user profile for user: ' . $name);
+     *
+     *      上下文信息
+     *          上下文数据也可以用数组的形式传递给日志方法。此上下文数据将被格式化并与日志消息一起显示
+     *              // [2017-10-25 09:18:21] local.INFO: Showing user profile for user {"name":"dymyw"}
+     *              Log::info('Showing user profile for user', ['name' => $name]);
+     *
+     *      访问底层的 Monolog 实例
+     *          $monolog = Log::getMonolog();
+     *          todo
+     */
+    public function log($name = 'dymyw')
+    {
+        // HTTP 异常
+        abort(403, 'Unauthorized action.');
     }
 }
