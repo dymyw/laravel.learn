@@ -34,6 +34,13 @@ Route::get('/', function () {
 //Route::get('hello', function() {
 //    return 'Hello World!';
 //});
+//Route::get('session', function() {
+//    // 在 Session 中存储一条数据...
+////    session(['login_user' => 'dymyw']);
+//
+//    // 获取 Session 中的一条数据...
+//    return $value = session('login_user', 'default');
+//});
 
 /**
  * 控制器方法
@@ -60,6 +67,7 @@ Route::get('/', function () {
  */
 Route::get('hello', 'HelloController@index');
 Route::get('url', 'TestController@url');
+Route::get('session', 'TestController@session');
 // 当一个请求与此指定路由的 URI 匹配时， TestController 类的 show 方法就会被执行。当然，路由参数也会被传递至该方法
 Route::get('test/{id}', 'TestController@show');
 Route::get('request/{id}', 'RequestController@show');
