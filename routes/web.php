@@ -69,6 +69,7 @@ Route::get('hello', 'HelloController@index');
 Route::get('url', 'TestController@url');
 Route::get('session', 'TestController@session');
 Route::get('log', 'TestController@log');
+Route::get('user', 'UserController@index');
 // 当一个请求与此指定路由的 URI 匹配时， TestController 类的 show 方法就会被执行。当然，路由参数也会被传递至该方法
 Route::get('test/{id}', 'TestController@show');
 Route::get('request/{id}', 'RequestController@show');
